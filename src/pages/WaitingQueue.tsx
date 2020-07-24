@@ -4,19 +4,35 @@ import CustomerList from '../components/CustomerList';
 import './WaitingQueue.css';
 import constants from '../constants';
 import AccountAPIHelper from '../helper/api/Accounts';
+import { Customers } from '../interfaces';
 
 class WaitingQueue extends React.Component {
 
   public accounts: AccountAPIHelper;
-
+  public state: Customers;
+  
   constructor(props: any) {
     super(props);
+    this.state = {
+      customers: []
+    }
     this.accounts = new AccountAPIHelper();
     this.onCallNextBatch = this.onCallNextBatch.bind(this);
   }
 
+  async componentDidMount() {
+    const customers = await this.accounts.getCustomersInQueue(constants.ACCOUNT_ID);
+    this.setState({
+      customers: customers
+    });
+  }
+
   async onCallNextBatch(event: any) {
     await this.accounts.callNextBatch(constants.ACCOUNT_ID);
+    const customers = await this.accounts.getCustomersInQueue(constants.ACCOUNT_ID);
+    this.setState({
+      customers: customers
+    });
   }
 
   render() {
@@ -36,7 +52,7 @@ class WaitingQueue extends React.Component {
               <IonTitle size="large">Waiting Queue</IonTitle>
             </IonToolbar>
           </IonHeader>
-          <CustomerList accountId={constants.ACCOUNT_ID} />
+          <CustomerList accountId={constants.ACCOUNT_ID} customers={this.state.customers} />
         </IonContent>
       </IonPage>
     );
