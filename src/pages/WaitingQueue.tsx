@@ -43,7 +43,7 @@ class WaitingQueue extends React.Component {
             <IonTitle><IonText>
               <h1>Waiting Queue</h1>
             </IonText></IonTitle>
-            <IonButton shape="round" onClick={this.onCallNextBatch} fill="outline" slot="end">Call Next Batch</IonButton>
+            <IonButton shape="round" onClick={this.onCallNextBatch} fill="solid" slot="end">Call Next Batch</IonButton>
           </IonToolbar>
         </IonHeader>
         <IonContent>

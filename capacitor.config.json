@@ -1,6 +1,6 @@
 {
   "appId": "io.ionic.starter",
-  "appName": "photo-gallery",
+  "appName": "virtual-token-management",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "build",
