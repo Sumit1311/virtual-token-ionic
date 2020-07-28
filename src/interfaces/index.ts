@@ -1,5 +1,6 @@
 export interface Customers {
     customers: Customer[]
+    showLoader: boolean;
 }
 
 export interface Customer {
@@ -9,5 +10,6 @@ export interface Customer {
 
 export interface CustomerListProps {
     accountId: string;
-    customers: Customer[]
+    customers: Customer[];
+    showLoader: boolean;
 }

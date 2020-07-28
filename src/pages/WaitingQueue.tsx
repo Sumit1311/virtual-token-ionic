@@ -10,29 +10,47 @@ class WaitingQueue extends React.Component {
 
   public accounts: CustomerAPIHelper;
   public state: Customers;
-  
+
   constructor(props: any) {
     super(props);
     this.state = {
-      customers: []
+      customers: [],
+      showLoader: true
     }
     this.accounts = new CustomerAPIHelper();
     this.onCallNextBatch = this.onCallNextBatch.bind(this);
   }
 
   async componentDidMount() {
+    this.showLoader();
     const customers = await this.accounts.getCustomersInQueue(constants.ACCOUNT_ID);
     this.setState({
       customers: customers
     });
+    this.hideLoader();
   }
 
+  showLoader() {
+    this.setState({
+      showLoader: true
+    });
+  }
+
+  hideLoader() {
+    this.setState({
+      showLoader: false
+    });
+  }
+  
+
   async onCallNextBatch(event: any) {
+    this.showLoader();
     await this.accounts.callNextBatch(constants.ACCOUNT_ID);
     const customers = await this.accounts.getCustomersInQueue(constants.ACCOUNT_ID);
     this.setState({
       customers: customers
     });
+    this.hideLoader();
   }
 
   render() {
@@ -52,7 +70,7 @@ class WaitingQueue extends React.Component {
               <IonTitle size="large">Waiting Queue</IonTitle>
             </IonToolbar>
           </IonHeader>
-          <CustomerList accountId={constants.ACCOUNT_ID} customers={this.state.customers} />
+          <CustomerList accountId={constants.ACCOUNT_ID} customers={this.state.customers} showLoader={this.state.showLoader} />
         </IonContent>
       </IonPage>
     );
