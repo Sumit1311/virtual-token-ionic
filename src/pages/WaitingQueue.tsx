@@ -3,12 +3,12 @@ import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonTex
 import CustomerList from '../components/CustomerList';
 import './WaitingQueue.css';
 import constants from '../constants';
-import AccountAPIHelper from '../helper/api/Accounts';
+import CustomerAPIHelper from '../helper/api/customer';
 import { Customers } from '../interfaces';
 
 class WaitingQueue extends React.Component {
 
-  public accounts: AccountAPIHelper;
+  public accounts: CustomerAPIHelper;
   public state: Customers;
   
   constructor(props: any) {
@@ -16,7 +16,7 @@ class WaitingQueue extends React.Component {
     this.state = {
       customers: []
     }
-    this.accounts = new AccountAPIHelper();
+    this.accounts = new CustomerAPIHelper();
     this.onCallNextBatch = this.onCallNextBatch.bind(this);
   }
 

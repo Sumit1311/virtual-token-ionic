@@ -1,15 +1,15 @@
 import './CustomerList.css';
 import React from 'react';
 import { IonList, IonItem, IonLabel, IonContent } from '@ionic/react';
-import AccountAPIHelper from "../helper/api/Accounts";
+import CustomerAPIHelper from "../helper/api/customer";
 import { CustomerListProps, Customer } from '../interfaces';
 
 export default class CustomerList extends React.Component<CustomerListProps>{
-  public accounts: AccountAPIHelper;
+  public accounts: CustomerAPIHelper;
 
   constructor(props: CustomerListProps) {
     super(props);
-    this.accounts = new AccountAPIHelper();
+    this.accounts = new CustomerAPIHelper();
   }
 
   render() {

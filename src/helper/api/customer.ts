@@ -1,13 +1,14 @@
 import APIClient from "./APIClient";
 import { AxiosInstance } from "axios";
 
-export default class AccountAPIHelper {
+export default class CustomerAPIHelper {
     private apiClient: AxiosInstance;
     constructor() {
         this.apiClient = APIClient.getClient();
     }
+    
     async getCustomersInQueue(accountId: string) {
-        let response = await this.apiClient.get("/accounts/customers", {
+        let response = await this.apiClient.get("/customers", {
             params: { accountId }
         });
 
@@ -19,7 +20,7 @@ export default class AccountAPIHelper {
     }
 
     async callNextBatch(accountId: string) {
-        let response = await this.apiClient.get("/accounts/call-customers", {
+        let response = await this.apiClient.get("/customers/call", {
             params: { accountId }
         });
 
