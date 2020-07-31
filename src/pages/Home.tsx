@@ -1,5 +1,5 @@
 import React from "react";
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonText } from "@ionic/react";
+import { IonHeader, IonToolbar, IonContent, IonButton, IonText } from "@ionic/react";
 
 class Home extends React.Component<any> {
     render() {
