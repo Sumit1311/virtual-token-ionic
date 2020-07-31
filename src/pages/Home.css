@@ -1,0 +1,49 @@
+.divider {
+    display: flex;
+      content: "";
+      flex: 1;
+}
+  
+.line {
+    align-items: center;
+    margin: 1em -1em;
+    color: #cccccc;
+      height: 1px;
+      margin: 0 1em;
+} 
+
+.one-line {
+       background: #cccccc;
+}
+
+.auth-form ion-text {
+    display: flex;
+    justify-content: center;
+}
+
+.auth-form ion-grid,
+.auth-form ion-row {
+    height: 89%;
+    justify-content: center;
+}
+
+@media(max-width: 600px) {
+    .auth-form ion-grid{
+        width: 100%
+    }    
+}
+
+@media(min-width:601px) and (max-width: 1900px) {
+    .auth-form ion-grid{
+        width: 30%
+    }    
+}
+
+.auth-form ion-col {
+    align-self: center;
+}
+
+.auth-form ion-button {
+    display: flex;
+    flex:1;
+}

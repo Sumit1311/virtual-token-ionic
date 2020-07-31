@@ -4,7 +4,10 @@ import {
   IonApp,
   IonRouterOutlet,
   IonLoading,
-  IonContent
+  IonContent,
+  IonHeader,
+  IonToolbar,
+  IonButton
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 
@@ -30,8 +33,6 @@ import AccountAPIHelper from './helper/api/account';
 import Dashboard from './pages/Dashboard';
 import Home from './pages/Home';
 import constants from './constants';
-import Login from './pages/Login';
-import Signup from './pages/Signup';
 
 class App extends React.Component {
   public state: any;
@@ -47,7 +48,8 @@ class App extends React.Component {
     }
     this.accounts = new AccountAPIHelper();
     this.showLoader = this.showLoader.bind(this);
-    this.hideLoader = this.hideLoader.bind(this)
+    this.hideLoader = this.hideLoader.bind(this);
+    this.logout = this.logout.bind(this)
   }
 
   async componentDidMount() {
@@ -62,6 +64,7 @@ class App extends React.Component {
 
   async getAccount() {
     try {
+      console.log("Get account");
       const account = await this.accounts.getAccount();
       this.setState({
         account,
@@ -97,42 +100,34 @@ class App extends React.Component {
   }
 
   getDashboard(match: any) {
-    return <Dashboard match={match} account={this.state.account} onShowLoader={this.showLoader} onHideLoader={this.hideLoader} onLogout={() => {
-      this.logout();
-    }} />
+    return <Dashboard match={match} account={this.state.account} onShowLoader={this.showLoader} onHideLoader={this.hideLoader} onLogout={this.logout} />
   }
 
-  getLogin() {
-    return <Login onShowLoader={this.showLoader} onHideLoader={this.hideLoader} onLoginSuccess={async () => {
-      await this.initPage();
-    }}></Login>
-  }
-
-  getSignup() {
-    return <Signup onShowLoader={this.showLoader} onHideLoader={this.hideLoader} onRegistrationSuccess={() => {
+  getHome() {
+    return <Home isRegistrationSuccess={this.state.isRegistrationSuccess} onShowLoader={this.showLoader} onHideLoader={this.hideLoader} onRegistrationSuccess={() => {
+      console.log("Registration Success");
       this.setRegistrationSuccess();
-    }}></Signup>
+    }} onLoginSuccess={async () => {
+      await this.initPage();
+    }}></Home>
   }
 
   render() {
     let dashboardUrl = Dashboard.urlPath = constants.DASHBOARD_URL;
     return <IonApp>
+      <IonHeader>
+        <IonToolbar>
+          <IonButton href="/home" color="primary" slot="start">Home</IonButton>
+        </IonToolbar>
+      </IonHeader>
       <IonContent>
         <IonReactRouter>
           <IonRouterOutlet>
-            <Route path="/home" component={Home}></Route>
-            <Route path="/login" render={() => {
+            <Route path="/home" render={() => {
               if (this.state.isAuthenticated) {
                 return <Redirect to={`${dashboardUrl}`}></Redirect>
               }
-              return this.getLogin();
-
-            }}></Route>
-            <Route path="/signup" render={() => {
-              if (this.state.isRegistrationSuccess) {
-                return <Redirect to="/home"> </Redirect>
-              }
-              return this.getSignup();
+              return this.getHome();
             }}></Route>
             <Route path={`${dashboardUrl}`} render={({ match }: any) => {
               if (this.state.isAuthenticated) {
@@ -156,7 +151,7 @@ class App extends React.Component {
         <IonLoading
           isOpen={this.state.showLoader}
           message={'Please wait...'}
-          duration={5000}
+          duration={60000}
         />
       </IonContent>
     </IonApp>

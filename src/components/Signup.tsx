@@ -1,9 +1,10 @@
 import React, { FormEvent } from "react";
-import { IonHeader, IonToolbar, IonContent, IonItem, IonLabel, IonInput, IonRow, IonCol, IonButton } from "@ionic/react";
+import { IonItem, IonLabel, IonInput, IonRow, IonCol, IonButton } from "@ionic/react";
 import UsersAPIHelper from "../helper/api/users";
-import LoginRequest from "../helper/api/requests/LoginRequest";
+import SignupRequest from "../helper/api/requests/SignupRequest";
 
-class Login extends React.Component<any, any> {
+class Signup extends React.Component<any, any> {
+
     private users: UsersAPIHelper;
 
     constructor(props: any) {
@@ -11,6 +12,7 @@ class Login extends React.Component<any, any> {
         this.state = {
             mobileNo: "",
             password: "",
+            orgName: "",
             isSubmitting: false
         }
         this.users = new UsersAPIHelper();
@@ -30,12 +32,12 @@ class Login extends React.Component<any, any> {
         this.props.onShowLoader();
         this.setState({ isSubmitting: true });
         try {
-            let response = await this.users.login(new LoginRequest()
-                .setUserName(this.state.mobileNo)
-                .setPassword(this.state.password));
-            localStorage.setItem("token", response.jwtToken);
+            await this.users.register(new SignupRequest()
+                .setMobileNo(this.state.mobileNo)
+                .setPassword(this.state.password)
+                .setOrgName(this.state.orgName));
             this.props.onHideLoader();
-            this.props.onLoginSuccess();
+            this.props.onRegistrationSuccess();
         } catch (error) {
             console.log(error);
         }
@@ -45,34 +47,30 @@ class Login extends React.Component<any, any> {
 
     render() {
         return <>
-            <IonHeader>
-                <IonToolbar>
-                    <IonButton href="/home" color="primary" slot="end">Home</IonButton>
-                    <IonButton href="/signup" color="primary" slot="end">Register</IonButton>
-                    <IonButton href="/login" color="primary" slot="end">Sign in </IonButton>
-                </IonToolbar>
-            </IonHeader>
-            <IonContent>
                 <form onSubmit={this.onSubmit}>
+                    <IonItem lines="inset">
+                        <IonLabel position="floating">Organisation Name</IonLabel>
+                        <IonInput type="text" name="orgName" value={this.state.orgName} onIonChange={this.onChange} required></IonInput>
+                    </IonItem>
                     <IonItem lines="inset">
                         <IonLabel position="floating">Mobile No</IonLabel>
                         <IonInput type="text" name="mobileNo" value={this.state.mobileNo} onIonChange={this.onChange} required></IonInput>
                     </IonItem>
                     <IonItem lines="inset">
                         <IonLabel position="floating">Password</IonLabel>
-                        <IonInput name="password" type="password" value={this.state.password} onIonChange={this.onChange} required></IonInput>
+                        <IonInput type="password" name="password" value={this.state.password} onIonChange={this.onChange} required></IonInput>
                     </IonItem>
                     <IonRow>
                         <IonCol>
-                            <IonButton type="submit" color="danger" expand="block" disabled={this.state.isSubmitting}>
-                                Log In
+                            <IonButton type="submit" color="danger" expand="block">
+                                Register
                             </IonButton>
                         </IonCol>
                     </IonRow>
                 </form>
-            </IonContent>
+
         </>
     }
 }
 
-export default Login;
+export default Signup;

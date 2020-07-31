@@ -23,8 +23,8 @@ export default class Dashboard extends React.Component<any> {
                     </Route>
                     <Route path={`${urlPath}/:tab(logout)`} exact={true} render={(props: any) => {
                         localStorage.removeItem("token");
-                        this.props.onLogout();
-                        return <Redirect to={`${urlPath}/`} exact={true} />
+                        window.location.reload();
+                        return <></>
                     }}>
                     </Route>
                     <Route path={`${urlPath}/`} render={() => (<Redirect to={`${urlPath}/admin`} ></Redirect>)} exact={true} />
@@ -45,6 +45,6 @@ export default class Dashboard extends React.Component<any> {
                     </IonTabButton>
                 </IonTabBar>
             </IonTabs>
-        </IonReactRouter>
+        </IonReactRouter >
     }
 }
