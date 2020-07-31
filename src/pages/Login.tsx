@@ -47,12 +47,9 @@ class Login extends React.Component<any, any> {
         return <>
             <IonHeader>
                 <IonToolbar>
-                    <IonButtons slot="start">
-                        <IonBackButton></IonBackButton>
-                    </IonButtons>
-                    <IonTitle>
-                        Sign In
-                </IonTitle>
+                    <IonButton href="/home" color="primary" slot="start">Home</IonButton>
+                    <IonButton href="/signup" color="primary" slot="end">Register</IonButton>
+                    <IonButton href="/login" color="primary" slot="end">Sign in </IonButton>
                 </IonToolbar>
             </IonHeader>
             <IonContent>

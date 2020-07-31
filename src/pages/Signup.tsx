@@ -36,7 +36,7 @@ class Signup extends React.Component<any, any> {
                 .setMobileNo(this.state.mobileNo)
                 .setPassword(this.state.password)
                 .setOrgName(this.state.orgName));
-                this.props.onHideLoader();
+            this.props.onHideLoader();
             this.props.onRegistrationSuccess();
         } catch (error) {
             console.log(error);
@@ -49,12 +49,9 @@ class Signup extends React.Component<any, any> {
         return <>
             <IonHeader>
                 <IonToolbar>
-                    <IonButtons slot="start">
-                        <IonBackButton></IonBackButton>
-                    </IonButtons>
-                    <IonTitle>
-                        Sign Up
-                    </IonTitle>
+                    <IonButton href="/home" color="primary" slot="start">Home</IonButton>
+                    <IonButton href="/signup" color="primary" slot="end">Register</IonButton>
+                    <IonButton href="/login" color="primary" slot="end">Sign in </IonButton>
                 </IonToolbar>
             </IonHeader>
             <IonContent>
