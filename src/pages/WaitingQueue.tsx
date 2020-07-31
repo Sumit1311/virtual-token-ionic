@@ -51,13 +51,12 @@ class WaitingQueue extends React.Component<any, Customers> {
   }
 
   render() {
-    let account = this.props.account;
     return (
       <IonPage>
         <IonHeader>
           <IonToolbar>
             <IonTitle><IonText>
-              <h1>{account ? account.name : ""}</h1>
+              <h1>Waiting Queue</h1>
             </IonText></IonTitle>
           </IonToolbar>
 
