@@ -6,7 +6,7 @@ class Home extends React.Component<any> {
         return <>
             <IonHeader>
                 <IonToolbar>
-                    <IonButton href="/home" color="primary" slot="start">Home</IonButton>
+                    <IonButton href="/home" color="primary" slot="end">Home</IonButton>
                     <IonButton href="/signup" color="primary" slot="end">Register</IonButton>
                     <IonButton href="/login" color="primary" slot="end">Sign in </IonButton>
                 </IonToolbar>
