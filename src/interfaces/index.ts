@@ -1,6 +1,5 @@
 export interface Customers {
-    customers: Customer[]
-    showLoader: boolean;
+    customers: Customer[];
 }
 
 export interface Customer {
@@ -8,8 +7,11 @@ export interface Customer {
     mobileNo: string;
 }
 
-export interface CustomerListProps {
+export interface Account {
+    name: string;
     accountId: string;
+}
+
+export interface CustomerListProps {
     customers: Customer[];
-    showLoader: boolean;
 }

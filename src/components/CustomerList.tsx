@@ -1,12 +1,12 @@
 import './CustomerList.css';
 import React from 'react';
-import { IonList, IonItem, IonLabel, IonContent, IonLoading } from '@ionic/react';
+import { IonList, IonItem, IonLabel, IonContent } from '@ionic/react';
 import CustomerAPIHelper from "../helper/api/customer";
 import { CustomerListProps, Customer } from '../interfaces';
 
 export default class CustomerList extends React.Component<CustomerListProps>{
   public accounts: CustomerAPIHelper;
-  public state:any;
+  public state: any;
 
   constructor(props: CustomerListProps) {
     super(props);
@@ -16,7 +16,7 @@ export default class CustomerList extends React.Component<CustomerListProps>{
   render() {
     return <IonContent>
       {/*-- List of Text Items --*/}
-      <IonList>
+      <IonList lines="none">
         {
           this.props.customers.map((customer: Customer) => {
             return <IonItem key={customer.mobileNo}><IonLabel><b>{customer.token}</b> <h6>{customer.mobileNo}</h6></IonLabel>
@@ -24,12 +24,7 @@ export default class CustomerList extends React.Component<CustomerListProps>{
           })
         }
       </IonList>
-      <IonLoading
-        cssClass='my-custom-class'
-        isOpen={this.props.showLoader}
-        message={'Please wait...'}
-        duration={5000}
-      />
+      
     </IonContent>
   }
 }

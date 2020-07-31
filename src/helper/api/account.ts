@@ -1,7 +1,7 @@
 import AuthenticatedClient from "./AuthenticatedClient";
 import { AxiosInstance } from "axios";
 
-export default class CustomerAPIHelper {
+export default class AccountAPIHelper {
     private apiClient: AxiosInstance | null = null;
 
     private async getClient() {
@@ -11,19 +11,9 @@ export default class CustomerAPIHelper {
         return (this.apiClient = await AuthenticatedClient.getAuthenticatedClient());
     }
 
-    async getCustomersInQueue() {
+    async getAccount() {
         let client = await this.getClient();
-        let response = await client.get("/customers");
-
-        if (response.data.status >= 400) {
-            throw new Error(response.data.body.error);
-        }
-        return response.data.body
-    }
-
-    async callNextBatch() {
-        let client = await this.getClient();
-        let response = await client.get("/customers/call");
+        let response = await client.get("/accounts");
 
         if (response.data.status >= 400) {
             throw new Error(response.data.body.error);
