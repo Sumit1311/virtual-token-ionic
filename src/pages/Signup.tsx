@@ -29,17 +29,20 @@ class Signup extends React.Component<any, any> {
 
     async onSubmit(event: FormEvent) {
         event.preventDefault();
+        this.props.onShowLoader();
         this.setState({ isSubmitting: true });
         try {
             await this.users.register(new SignupRequest()
                 .setMobileNo(this.state.mobileNo)
                 .setPassword(this.state.password)
                 .setOrgName(this.state.orgName));
+                this.props.onHideLoader();
             this.props.onRegistrationSuccess();
         } catch (error) {
             console.log(error);
         }
         this.setState({ isSubmitting: false });
+        this.props.onHideLoader();
     }
 
     render() {

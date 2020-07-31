@@ -3,7 +3,8 @@ import { Route, Redirect } from 'react-router-dom';
 import {
   IonApp,
   IonRouterOutlet,
-  IonLoading
+  IonLoading,
+  IonContent
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 
@@ -50,6 +51,10 @@ class App extends React.Component {
   }
 
   async componentDidMount() {
+    await this.initPage();
+  }
+
+  async initPage() {
     this.showLoader();
     await this.getAccount();
     this.hideLoader();
@@ -97,51 +102,63 @@ class App extends React.Component {
     }} />
   }
 
+  getLogin() {
+    return <Login onShowLoader={this.showLoader} onHideLoader={this.hideLoader} onLoginSuccess={async () => {
+      await this.initPage();
+    }}></Login>
+  }
+
+  getSignup() {
+    return <Signup onShowLoader={this.showLoader} onHideLoader={this.hideLoader} onRegistrationSuccess={() => {
+      this.setRegistrationSuccess();
+    }}></Signup>
+  }
+
   render() {
     let dashboardUrl = Dashboard.urlPath = constants.DASHBOARD_URL;
     return <IonApp>
-      <IonLoading
-        isOpen={this.state.showLoader}
-        message={'Please wait...'}
-        duration={5000}
-      />
-      <IonReactRouter>
-        <IonRouterOutlet>
-          <Route path="/home" component={Home}></Route>
-          <Route path="/login" render={() => {
-            if (this.state.isAuthenticated) {
-              return <Redirect to={`${dashboardUrl}`}></Redirect>
-            }
-            return <Login onLoginSuccess={async () => {
-              await this.getAccount();
-            }}></Login>
-          }}></Route>
-          <Route path="/signup" render={() => {
-            if (this.state.isRegistrationSuccess) {
+      <IonContent>
+        <IonReactRouter>
+          <IonRouterOutlet>
+            <Route path="/home" component={Home}></Route>
+            <Route path="/login" render={() => {
+              if (this.state.isAuthenticated) {
+                return <Redirect to={`${dashboardUrl}`}></Redirect>
+              }
+              return this.getLogin();
+
+            }}></Route>
+            <Route path="/signup" render={() => {
+              if (this.state.isRegistrationSuccess) {
+                return <Redirect to="/home"> </Redirect>
+              }
+              return this.getSignup();
+            }}></Route>
+            <Route path={`${dashboardUrl}`} render={({ match }: any) => {
+              if (this.state.isAuthenticated) {
+                return this.getDashboard(match)
+              }
               return <Redirect to="/home"> </Redirect>
-            }
-            return <Signup onRegistrationSuccess={() => {
-              this.setRegistrationSuccess();
-            }}></Signup>
-          }}></Route>
-          <Route path={`${dashboardUrl}`} render={({ match }: any) => {
-            if (this.state.isAuthenticated) {
-              return this.getDashboard(match)
-            }
-            return <Home />
-          }} exact={true} />
-          <Route path={`${dashboardUrl}/:tab`} render={({ match }: any) => {
-            match.path = dashboardUrl;
-            if (this.state.isAuthenticated) {
-              return this.getDashboard(match);
-            }
-            return <Home />
-          }} exact={true} />
-          <Route path="/" render={() => {
-            return <Redirect to={`${dashboardUrl}`}></Redirect>
-          }} exact={true} />
-        </IonRouterOutlet>
-      </IonReactRouter>
+            }} exact={true} />
+            <Route path={`${dashboardUrl}/:tab`} render={({ match }: any) => {
+              match.path = dashboardUrl;
+              if (this.state.isAuthenticated) {
+                return this.getDashboard(match);
+              }
+              return <Redirect to="/home"> </Redirect>
+            }} exact={true} />
+            <Route path="/" render={() => {
+              return <Redirect to={`${dashboardUrl}`}></Redirect>
+            }} exact={true} />
+          </IonRouterOutlet>
+        </IonReactRouter>
+
+        <IonLoading
+          isOpen={this.state.showLoader}
+          message={'Please wait...'}
+          duration={5000}
+        />
+      </IonContent>
     </IonApp>
   }
 }

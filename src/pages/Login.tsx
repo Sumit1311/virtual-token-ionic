@@ -27,17 +27,20 @@ class Login extends React.Component<any, any> {
 
     async onSubmit(event: FormEvent) {
         event.preventDefault();
+        this.props.onShowLoader();
         this.setState({ isSubmitting: true });
         try {
             let response = await this.users.login(new LoginRequest()
                 .setUserName(this.state.mobileNo)
                 .setPassword(this.state.password));
             localStorage.setItem("token", response.jwtToken);
+            this.props.onHideLoader();
             this.props.onLoginSuccess();
         } catch (error) {
             console.log(error);
         }
         this.setState({ isSubmitting: false });
+        this.props.onHideLoader();
     }
 
     render() {
