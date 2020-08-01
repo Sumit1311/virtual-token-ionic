@@ -12,6 +12,7 @@ export default class UsersAPIHelper {
 
     async login(body: LoginRequest) {
         let response = await this.apiClient.post("/users/login", body.getRequestBody());
+        
         if (response.data.status >= 400) {
             throw new Error(response.data.body.error);
         }
@@ -21,7 +22,6 @@ export default class UsersAPIHelper {
     async register(body: SignupRequest) {
         let response = await this.apiClient.post("/accounts/signup", body.getRequestBody());
         if (response.data.status >= 400) {
-            console.log(response);
             throw new Error(response.data.body.error);
         }
         return response.data.body;
