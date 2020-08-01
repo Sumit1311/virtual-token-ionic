@@ -33,9 +33,15 @@
     }    
 }
 
-@media(min-width:601px) and (max-width: 1900px) {
+@media(min-width:601px) and (max-width: 1000px) {
     .auth-form ion-grid{
-        width: 30%
+        width: 50%
+    }    
+}
+
+@media(min-width:1001px) and (max-width: 1900px) {
+    .auth-form ion-grid{
+        width: 40%
     }    
 }
 

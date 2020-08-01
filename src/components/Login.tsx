@@ -1,7 +1,8 @@
 import React, { FormEvent } from "react";
-import { IonItem, IonLabel, IonInput, IonRow, IonCol, IonButton } from "@ionic/react";
+import { IonItem, IonLabel, IonInput, IonRow, IonCol, IonButton} from "@ionic/react";
 import UsersAPIHelper from "../helper/api/users";
 import LoginRequest from "../helper/api/requests/LoginRequest";
+import NotificationToast from "./MessageToast";
 
 class Login extends React.Component<any, any> {
     private users: UsersAPIHelper;
@@ -11,7 +12,8 @@ class Login extends React.Component<any, any> {
         this.state = {
             mobileNo: "",
             password: "",
-            isSubmitting: false
+            isSubmitting: false,
+            errorText: null
         }
         this.users = new UsersAPIHelper();
         this.onSubmit = this.onSubmit.bind(this);
@@ -26,6 +28,7 @@ class Login extends React.Component<any, any> {
     }
 
     async onSubmit(event: FormEvent) {
+        this.hideErrorText();
         event.preventDefault();
         this.props.onShowLoader();
         this.setState({ isSubmitting: true });
@@ -37,15 +40,30 @@ class Login extends React.Component<any, any> {
             this.props.onHideLoader();
             this.props.onLoginSuccess();
         } catch (error) {
+            this.showErrorText(error.message);
             console.log(error);
         }
         this.setState({ isSubmitting: false });
         this.props.onHideLoader();
     }
 
+    showErrorText(text: string) {
+        this.setState({ errorText: text });
+    }
+
+    hideErrorText() {
+        this.setState({ errorText: null });
+    }
+
+    getNotificationToast() {
+        return <NotificationToast errorText={this.state.errorText} />
+    }
+
     render() {
         return <>
+
             <form onSubmit={this.onSubmit}>
+                {this.getNotificationToast()}
                 <IonItem lines="inset">
                     <IonLabel position="floating">Mobile No</IonLabel>
                     <IonInput type="text" name="mobileNo" value={this.state.mobileNo} onIonChange={this.onChange} required></IonInput>

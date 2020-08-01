@@ -11,22 +11,32 @@ class Home extends React.Component<any, any> {
         super(props);
         this.state = {
             showRegistration: false,
-            showLogin: false
+            showLogin: false,
+            notificationText: ""
         }
         this.showLogin = this.showLogin.bind(this);
         this.showRegistration = this.showRegistration.bind(this);
+        this.showRegistrationSuccess = this.showRegistrationSuccess.bind(this);
+    }
+
+    showRegistrationSuccess() {
+        this.setState({
+            showRegistration: false,
+            showLogin: true,
+            notificationText: constants.REGISTRATION_SUCCESS
+        });
     }
 
     showLogin() {
         this.setState({
             showRegistration: false,
-            showLogin: true
+            showLogin: !this.state.showLogin
         })
     }
 
     showRegistration() {
         this.setState({
-            showRegistration: true,
+            showRegistration: !this.state.showRegistration,
             showLogin: false
         })
     }
@@ -42,18 +52,20 @@ class Home extends React.Component<any, any> {
 
     getSignup() {
         if (this.state.showRegistration) {
-            return <Signup onShowLoader={this.props.onShowLoader} onHideLoader={this.props.onHideLoader} onRegistrationSuccess={this.props.onRegistrationSuccess}></Signup>;
+            return <Signup onShowLoader={this.props.onShowLoader} onHideLoader={this.props.onHideLoader} onRegistrationSuccess={this.showRegistrationSuccess}></Signup>;
         } else {
             return <></>;
         }
     }
 
     render() {
-        let text = "";
-        if (this.props.isRegistrationSuccess) {
-            text = constants.REGISTRATION_SUCCESS;
-        }
+        let text = this.state.notificationText;
         return <>
+            <IonHeader>
+                <IonToolbar>
+                    <IonButton href="/home" color="primary" slot="start">Home</IonButton>
+                </IonToolbar>
+            </IonHeader>
             <IonContent class="auth-form">
                 <IonText color="primary" class="ion-margin">
                     {text}

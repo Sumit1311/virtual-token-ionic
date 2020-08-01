@@ -2,6 +2,7 @@ import React, { FormEvent } from "react";
 import { IonItem, IonLabel, IonInput, IonRow, IonCol, IonButton } from "@ionic/react";
 import UsersAPIHelper from "../helper/api/users";
 import SignupRequest from "../helper/api/requests/SignupRequest";
+import NotificationToast from "./MessageToast";
 
 class Signup extends React.Component<any, any> {
 
@@ -13,11 +14,24 @@ class Signup extends React.Component<any, any> {
             mobileNo: "",
             password: "",
             orgName: "",
-            isSubmitting: false
+            isSubmitting: false,
+            errorText: ""
         }
         this.users = new UsersAPIHelper();
         this.onSubmit = this.onSubmit.bind(this);
         this.onChange = this.onChange.bind(this);
+    }
+
+    showErrorText(text: string) {
+        this.setState({ errorText: text });
+    }
+
+    hideErrorText() {
+        this.setState({ errorText: null });
+    }
+
+    getNotificationToast() {
+        return <NotificationToast errorText={this.state.errorText} />
     }
 
     onChange(event: any) {
@@ -29,6 +43,7 @@ class Signup extends React.Component<any, any> {
 
     async onSubmit(event: FormEvent) {
         event.preventDefault();
+        this.hideErrorText();
         this.props.onShowLoader();
         this.setState({ isSubmitting: true });
         try {
@@ -39,6 +54,7 @@ class Signup extends React.Component<any, any> {
             this.props.onHideLoader();
             this.props.onRegistrationSuccess();
         } catch (error) {
+            this.showErrorText(error.message);
             console.log(error);
         }
         this.setState({ isSubmitting: false });
@@ -47,27 +63,29 @@ class Signup extends React.Component<any, any> {
 
     render() {
         return <>
-                <form onSubmit={this.onSubmit}>
-                    <IonItem lines="inset">
-                        <IonLabel position="floating">Organisation Name</IonLabel>
-                        <IonInput type="text" name="orgName" value={this.state.orgName} onIonChange={this.onChange} required></IonInput>
-                    </IonItem>
-                    <IonItem lines="inset">
-                        <IonLabel position="floating">Mobile No</IonLabel>
-                        <IonInput type="text" name="mobileNo" value={this.state.mobileNo} onIonChange={this.onChange} required></IonInput>
-                    </IonItem>
-                    <IonItem lines="inset">
-                        <IonLabel position="floating">Password</IonLabel>
-                        <IonInput type="password" name="password" value={this.state.password} onIonChange={this.onChange} required></IonInput>
-                    </IonItem>
-                    <IonRow>
-                        <IonCol>
-                            <IonButton type="submit" color="danger" expand="block">
-                                Register
+            <form onSubmit={this.onSubmit}>
+                {this.getNotificationToast()}
+                <IonItem lines="inset">
+                    <IonLabel position="floating">Organisation Name</IonLabel>
+                    <IonInput type="text" name="orgName" value={this.state.orgName} onIonChange={this.onChange} required></IonInput>
+                </IonItem>
+                <IonItem lines="inset">
+                    <IonLabel position="floating">Mobile No</IonLabel>
+                    <IonInput type="text" name="mobileNo" value={this.state.mobileNo} onIonChange={this.onChange} required></IonInput>
+                </IonItem>
+                <IonItem lines="inset">
+                    <IonLabel position="floating">Password</IonLabel>
+                    <IonInput type="password" name="password" value={this.state.password} onIonChange={this.onChange} required></IonInput>
+                </IonItem>
+
+                <IonRow>
+                    <IonCol>
+                        <IonButton type="submit" color="danger" expand="block">
+                            Register
                             </IonButton>
-                        </IonCol>
-                    </IonRow>
-                </form>
+                    </IonCol>
+                </IonRow>
+            </form>
 
         </>
     }

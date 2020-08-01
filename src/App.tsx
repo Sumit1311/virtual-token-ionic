@@ -5,9 +5,6 @@ import {
   IonRouterOutlet,
   IonLoading,
   IonContent,
-  IonHeader,
-  IonToolbar,
-  IonButton
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 
@@ -43,8 +40,7 @@ class App extends React.Component {
     this.state = {
       showLoader: true,
       isAuthenticated: false,
-      account: null,
-      isRegistrationSuccess: false
+      account: null
     }
     this.accounts = new AccountAPIHelper();
     this.showLoader = this.showLoader.bind(this);
@@ -93,21 +89,12 @@ class App extends React.Component {
     });
   }
 
-  setRegistrationSuccess() {
-    this.setState({
-      isRegistrationSuccess: true
-    })
-  }
-
   getDashboard(match: any) {
     return <Dashboard match={match} account={this.state.account} onShowLoader={this.showLoader} onHideLoader={this.hideLoader} onLogout={this.logout} />
   }
 
   getHome() {
-    return <Home isRegistrationSuccess={this.state.isRegistrationSuccess} onShowLoader={this.showLoader} onHideLoader={this.hideLoader} onRegistrationSuccess={() => {
-      console.log("Registration Success");
-      this.setRegistrationSuccess();
-    }} onLoginSuccess={async () => {
+    return <Home onShowLoader={this.showLoader} onHideLoader={this.hideLoader} onLoginSuccess={async () => {
       await this.initPage();
     }}></Home>
   }
@@ -115,11 +102,6 @@ class App extends React.Component {
   render() {
     let dashboardUrl = Dashboard.urlPath = constants.DASHBOARD_URL;
     return <IonApp>
-      <IonHeader>
-        <IonToolbar>
-          <IonButton href="/home" color="primary" slot="start">Home</IonButton>
-        </IonToolbar>
-      </IonHeader>
       <IonContent>
         <IonReactRouter>
           <IonRouterOutlet>
