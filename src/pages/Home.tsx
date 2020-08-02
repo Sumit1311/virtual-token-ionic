@@ -1,5 +1,5 @@
 import React from "react";
-import { IonHeader, IonToolbar, IonContent, IonButton, IonText, IonGrid, IonRow, IonCol } from "@ionic/react";
+import { IonHeader, IonToolbar, IonContent, IonButton, IonText, IonGrid, IonRow, IonCol, IonTitle, IonButtons, IonMenuButton } from "@ionic/react";
 import "./Home.css";
 import Login from "../components/Login";
 import Signup from "../components/Signup";
@@ -61,9 +61,11 @@ class Home extends React.Component<any, any> {
     render() {
         let text = this.state.notificationText;
         return <>
-            <IonHeader >
+            <IonHeader className="home-header">
                 <IonToolbar color="primary">
-                    <IonButton href="/home" color="light" fill="clear" slot="end">Home</IonButton>
+                    <IonTitle><IonText>
+                        <h1>Virtual Token Management System</h1>
+                    </IonText></IonTitle>
                 </IonToolbar>
             </IonHeader>
             <IonContent class="auth-form">
