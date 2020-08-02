@@ -8,7 +8,7 @@ class AdministratorConsole extends React.Component<any> {
             <IonHeader >
             <IonToolbar color="primary">
             <IonTitle><IonText>
-              <h1>Cofiguration</h1>
+              <h1>Configuration</h1>
             </IonText></IonTitle>
           </IonToolbar>
             </IonHeader>

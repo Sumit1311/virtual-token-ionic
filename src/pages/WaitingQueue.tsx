@@ -58,7 +58,6 @@ class WaitingQueue extends React.Component<any, Customers> {
             <IonTitle><IonText>
               <h1>Queue</h1>
             </IonText></IonTitle>
-            <IonButton size="small" color="light" onClick={this.onCallNextBatch} fill="outline" slot="end">Notify Next</IonButton>
           </IonToolbar>
 
         </IonHeader>

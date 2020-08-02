@@ -33,7 +33,7 @@ export default class Dashboard extends React.Component<any> {
                 <IonTabBar slot="bottom">
                     <IonTabButton tab="admin" href={`${urlPath}/admin`}>
                         <IonIcon icon={ellipse} />
-                        <IonLabel>Cofiguration</IonLabel>
+                        <IonLabel>Configuration</IonLabel>
                     </IonTabButton>
                     <IonTabButton tab="queue" href={`${urlPath}/queue`}>
                         <IonIcon icon={ellipse} />
