@@ -61,9 +61,9 @@ class Home extends React.Component<any, any> {
     render() {
         let text = this.state.notificationText;
         return <>
-            <IonHeader>
-                <IonToolbar>
-                    <IonButton href="/home" color="primary" slot="start">Home</IonButton>
+            <IonHeader >
+                <IonToolbar color="primary">
+                    <IonButton href="/home" color="light" fill="clear" slot="end">Home</IonButton>
                 </IonToolbar>
             </IonHeader>
             <IonContent class="auth-form">

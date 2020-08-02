@@ -53,19 +53,16 @@ class WaitingQueue extends React.Component<any, Customers> {
   render() {
     return (
       <IonPage>
-        <IonHeader>
-          <IonToolbar>
+        <IonHeader  >
+          <IonToolbar color="primary">
             <IonTitle><IonText>
-              <h1>Waiting Queue</h1>
+              <h1>Queue</h1>
             </IonText></IonTitle>
+            <IonButton size="small" color="light" onClick={this.onCallNextBatch} fill="outline" slot="end">Notify Next</IonButton>
           </IonToolbar>
 
         </IonHeader>
         <IonContent>
-          <IonListHeader lines="none" color="secondary">
-            <IonButton size="small" color="light" onClick={this.onCallNextBatch} fill="outline">Call Next Batch</IonButton>
-          </IonListHeader>
-
           <CustomerList customers={this.state.customers} />
         </IonContent>
       </IonPage>
