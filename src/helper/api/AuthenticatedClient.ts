@@ -7,12 +7,6 @@ export default class AuthenticatedAPIClient {
     static async getAuthenticatedClient() {
         let token = localStorage.getItem("token");
         if (!token) {
-            /*let repsonse = await new UsersAPIHelper().login({
-                userName: "7588415318",
-                password: "123456"
-            });
-            localStorage.setItem("token", repsonse.jwtToken);
-            token = repsonse.jwtToken;*/
             throw new Error(constants.LOGIN_FAILURE);
         }
         return axios.create({

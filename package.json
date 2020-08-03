@@ -5,6 +5,7 @@
   "dependencies": {
     "@capacitor/android": "^2.3.0",
     "@capacitor/core": "2.3.0",
+    "@ionic-native/android-permissions": "^5.27.0",
     "@ionic/pwa-elements": "^3.0.0",
     "@ionic/react": "^5.0.7",
     "@ionic/react-hooks": "0.0.8",

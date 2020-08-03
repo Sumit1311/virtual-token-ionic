@@ -60,7 +60,6 @@ class App extends React.Component {
 
   async getAccount() {
     try {
-      console.log("Get account");
       const account = await this.accounts.getAccount();
       this.setState({
         account,
