@@ -1,5 +1,5 @@
 import React from 'react';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonText, IonListHeader } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonText } from '@ionic/react';
 import CustomerList from '../components/CustomerList';
 import './WaitingQueue.css';
 import CustomerAPIHelper from '../helper/api/customer';

@@ -1,0 +1,16 @@
+Title:
+Visitors en-queue
+
+Short Description:
+Vacant your waiting area using our virtual queuing solution. Registering in queue is as simple as giving "Missed Calls"
+
+Full Description :
+This app allows you to manage visitors' queue virtually. Grocery Stores, Hospitals, Malls, Medical Stores, Garages, Banks ,Customer Service Point, Goverment Offices can use this app to manage their visitors' queue..
+
+Features--
+ - Registering in the queue is as simple as giving "Missed calls"
+ - Dynamic slot allotment
+ - Auto-generated token number for each customer in queue
+ - SMS service is used for giving notifications
+
+tags: virtual queue, virtual token, virtual, queue, token, slots allotment, visitor management, appointments, queue management, token management, visitor queue, visitors, waiting queue.
