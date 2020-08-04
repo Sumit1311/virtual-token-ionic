@@ -64,7 +64,7 @@ class Home extends React.Component<any, any> {
             <IonHeader className="home-header">
                 <IonToolbar color="primary">
                     <IonTitle><IonText>
-                        <h1>Virtual Token Management System</h1>
+                        <h1>Visitors EnQueue</h1>
                     </IonText></IonTitle>
                 </IonToolbar>
             </IonHeader>

@@ -1,6 +1,6 @@
 {
   "appId": "io.ionic.starter",
-  "appName": "virtual-token-management",
+  "appName": "Visitors EnQueue",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "build",
