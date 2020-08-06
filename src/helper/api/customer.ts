@@ -8,9 +8,6 @@ export default class CustomerAPIHelper {
     private apiClient: AxiosInstance | null = null;
 
     private async getClient() {
-        if (this.apiClient != null) {
-            return this.apiClient;
-        }
         return (this.apiClient = await AuthenticatedClient.getAuthenticatedClient());
     }
 
