@@ -5,8 +5,11 @@ import {
   IonRouterOutlet,
   IonLoading,
   IonContent,
+  setupConfig,
+  IonToast
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
+import { Plugins, Capacitor } from '@capacitor/core';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -30,22 +33,54 @@ import AccountAPIHelper from './helper/api/account';
 import Dashboard from './pages/Dashboard';
 import Home from './pages/Home';
 import constants from './constants';
+import { createBrowserHistory } from 'history';
 
-class App extends React.Component {
+const { App: CapApp } = Plugins;
+setupConfig({
+  hardwareBackButton: false
+})
+
+class App extends React.Component<any> {
   public state: any;
   public accounts: AccountAPIHelper;
+  public history: any = createBrowserHistory();
 
   constructor(props: any) {
     super(props);
     this.state = {
       showLoader: true,
       isAuthenticated: false,
-      account: null
+      account: null,
+      shouldExit: false
     }
     this.accounts = new AccountAPIHelper();
     this.showLoader = this.showLoader.bind(this);
     this.hideLoader = this.hideLoader.bind(this);
     this.logout = this.logout.bind(this)
+  }
+
+  componentWillMount() {
+    if (Capacitor.isNative) {
+      CapApp.addListener("backButton", (event: any) => {
+        if ((window.location.pathname === "/dashboard/admin" ||
+          window.location.pathname === "/home")) {
+          console.log(`${this.state.shouldExit}`);
+          if (this.state.shouldExit) {
+            CapApp.exitApp();
+          } else {
+            this.setState({
+              shouldExit: true
+            });
+          }
+
+        } else {
+          this.history.goBack();
+          this.setState({
+            shouldExit: false
+          });
+        }
+      });
+    }
   }
 
   async componentDidMount() {
@@ -55,6 +90,9 @@ class App extends React.Component {
   async initPage() {
     this.showLoader();
     await this.getAccount();
+    this.setState({
+      shouldExit: false
+    });
     this.hideLoader();
   }
 
@@ -89,7 +127,7 @@ class App extends React.Component {
   }
 
   getDashboard(match: any) {
-    return <Dashboard match={match} account={this.state.account} onShowLoader={this.showLoader} onHideLoader={this.hideLoader} onLogout={this.logout} />
+    return <Dashboard history={this.history} match={match} account={this.state.account} onShowLoader={this.showLoader} onHideLoader={this.hideLoader} onLogout={this.logout} />
   }
 
   getHome() {
@@ -102,7 +140,7 @@ class App extends React.Component {
     let dashboardUrl = Dashboard.urlPath = constants.DASHBOARD_URL;
     return <IonApp>
       <IonContent>
-        <IonReactRouter>
+        <IonReactRouter history={this.history}>
           <IonRouterOutlet>
             <Route path="/home" render={() => {
               if (this.state.isAuthenticated) {
@@ -110,9 +148,9 @@ class App extends React.Component {
               }
               return this.getHome();
             }}></Route>
-            <Route path={`${dashboardUrl}`} render={({ match }: any) => {
+            <Route path={`${dashboardUrl}`} render={(props: any) => {
               if (this.state.isAuthenticated) {
-                return this.getDashboard(match)
+                return this.getDashboard(props.match)
               }
               return <Redirect to="/home"> </Redirect>
             }} exact={true} />
@@ -133,6 +171,13 @@ class App extends React.Component {
           isOpen={this.state.showLoader}
           message={'Please wait...'}
           duration={60000}
+        />
+        <IonToast
+            animated={true}
+            position="bottom"
+            isOpen={this.state.shouldExit}
+            message={constants.PRESS_BACK_AGAIN}
+            duration={5000}
         />
       </IonContent>
     </IonApp>
