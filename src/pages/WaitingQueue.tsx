@@ -5,7 +5,7 @@ import './WaitingQueue.css';
 import CustomerAPIHelper from '../helper/api/customer';
 import { Customers } from '../interfaces';
 
-class WaitingQueue extends React.Component<any, Customers> {
+class WaitingQueue extends React.Component<any> {
 
   public customers: CustomerAPIHelper;
 
@@ -16,19 +16,6 @@ class WaitingQueue extends React.Component<any, Customers> {
     }
     this.customers = new CustomerAPIHelper();
     this.onCallNextBatch = this.onCallNextBatch.bind(this);
-  }
-
-  async componentDidMount() {
-    this.showLoader();
-    await this.getCustomers();
-    this.hideLoader();
-  }
-
-  async getCustomers() {
-    const customers = await this.customers.getCustomersInQueue();
-    this.setState({
-      customers: customers
-    });
   }
 
   showLoader() {
@@ -43,10 +30,6 @@ class WaitingQueue extends React.Component<any, Customers> {
   async onCallNextBatch(event: any) {
     this.showLoader();
     await this.customers.callNextBatch();
-    const customers = await this.customers.getCustomersInQueue();
-    this.setState({
-      customers: customers
-    });
     this.hideLoader();
   }
 
@@ -62,7 +45,7 @@ class WaitingQueue extends React.Component<any, Customers> {
 
         </IonHeader>
         <IonContent>
-          <CustomerList customers={this.state.customers} />
+          <CustomerList onShowLoader={this.props.onShowLoader} onHideLoader={this.props.onHideLoader} />
         </IonContent>
       </IonPage>
     );

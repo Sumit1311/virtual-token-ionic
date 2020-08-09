@@ -22,3 +22,11 @@
 .container a {
   text-decoration: none;
 }
+
+ion-list .list-item-inactive {
+  color: grey;
+}
+
+ion-list .list-item-active {
+  color:black;
+}
